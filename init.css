@@ -17,3 +17,25 @@ input[type='number'] {
   width: 10em;
   margin: auto;
 }
+.form-check-inline {
+  margin-right: auto !important;
+}
+.pointer {
+  cursor: pointer;
+}
+input[type='checkbox'].skillPot:checked {
+  background-color: #CE93D8;
+}
+input[type='checkbox'].hpPot:checked,
+.resultHpLabel {
+  background-color: #A5D6A7 !important;
+}
+input[type='checkbox'].atkPot:checked,
+.resultAtkLabel {
+  background-color: #EF9A9A !important;
+}
+.w-max {
+  width:100%;
+}
+
+
