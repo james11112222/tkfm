@@ -76,8 +76,8 @@ function calculate($charDiv){
       if (subPot.type == 'atk') atkBuff += subPot.buff
       else if (subPot.type == 'hp') hpBuff += subPot.buff
     })
-    console.log('atkBuff', atkBuff);
-    console.log('hpBuff', hpBuff);
+    // console.log('atkBuff', atkBuff);
+    // console.log('hpBuff', hpBuff);
 
     $charDiv.find(".resultAtk").text(Math.floor((Math.ceil( (curCharInfo.status.initATK / (5+curCharInfo.rarity)) * 10 ) / 10) * (5+star) * Math.pow(1.1, lv-1) * (1+(1+discipline)*discipline/2*0.05) * (1+atkBuff)))
     $charDiv.find(".resultHp").text(Math.floor((Math.ceil( (curCharInfo.status.initHP / (5+curCharInfo.rarity)) * 10 ) / 10) * (5+star) * Math.pow(1.1, lv-1) * (1+(1+discipline)*discipline/2*0.05) * (1+hpBuff)))
