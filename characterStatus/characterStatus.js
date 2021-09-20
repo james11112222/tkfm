@@ -23,19 +23,23 @@ $(function(){
         }
       })
       for (let i = 1; i <= 60; i++) $div.find('.lv').append($('<option>', { value: i, text: i }));
-      for (let i = 1; i <= 5; i++) $div.find('.bond').append($('<option>', { value: i, text: i }));
-      for (let i = 0; i <= 3; i++) $div.find('.discipline').append($('<option>', { value: i, text: i }));
+      // for (let i = 1; i <= 5; i++) $div.find('.bond').append($('<option>', { value: i, text: i }));
     })
 
     $(document).on('change', '.char', (event) => {
       let $element = $(event.currentTarget);
       let $star = $element.closest('.charDiv').find('.star');
+      let $discipline = $element.closest('.charDiv').find('.discipline');
       let $pot = $element.closest('.charDiv').find('.potential');
       let curCharInfo = CHARACTERS[$element.val()];
+
       $star.empty();
+      $discipline.empty();
       $pot.empty();
       for (let i = curCharInfo.rarity; i <= 5; i++) $star.append($('<option>', { value: i, text: i }));
       for (let i = 1; i <= (curCharInfo.rarity < 2 ? 6 : 12); i++) $pot.append($('<option>', { value: i, text: i }));
+      if (curCharInfo.rarity < 1) $discipline.append($('<option>', { value: 0, text: '-' })).attr('disabled', true);
+      else for (let i = 0; i <= 3; i++) $discipline.append($('<option>', { value: i, text: i }));
       calculate($element.closest('.charDiv'));
     })
     $('.char').change();
@@ -43,6 +47,7 @@ $(function(){
     $(document).on('change', '.potential', (event) => {
       let $element = $(event.currentTarget);
       let charId = $element.closest('.charDiv').find('.char').val();
+
       for (let i = 1; i <= 6; i++) {
         $element.siblings().find('input:eq(' + (i-1) + ')').attr('class', 'subPot form-check-input pointer ' + POTENTIALS[CHARACTERS[charId].potentialType][$element.val()][i].type + 'Pot');
       }
@@ -52,10 +57,11 @@ $(function(){
 
     $(document).on('change', ".subPot, .lv, .star, .discipline", (event) => {
       let $element = $(event.currentTarget);
+
       calculate($element.closest('.charDiv'));
     })
   } catch(e) {
-    alert('有地方出錯了，請叫那個低能作者儘快修復');
+    alert('有地方出錯了，叫那個低能作者儘快修復');
   }
 });
 
@@ -76,20 +82,10 @@ function calculate($charDiv){
       if (subPot.type == 'atk') atkBuff += subPot.buff
       else if (subPot.type == 'hp') hpBuff += subPot.buff
     })
-    // console.log('atkBuff', atkBuff);
-    // console.log('hpBuff', hpBuff);
 
     $charDiv.find(".resultAtk").text(Math.floor((Math.ceil( (curCharInfo.status.initATK / (5+curCharInfo.rarity)) * 10 ) / 10) * (5+star) * Math.pow(1.1, lv-1) * (1+(1+discipline)*discipline/2*0.05) * (1+atkBuff)))
     $charDiv.find(".resultHp").text(Math.floor((Math.ceil( (curCharInfo.status.initHP / (5+curCharInfo.rarity)) * 10 ) / 10) * (5+star) * Math.pow(1.1, lv-1) * (1+(1+discipline)*discipline/2*0.05) * (1+hpBuff)))
-    // console.log(curCharInfo.status.initATK);
-    // console.log(curCharInfo.status.initATK / (5+curCharInfo.rarity));
-    // console.log(Math.ceil( (curCharInfo.status.initATK / (5+curCharInfo.rarity)) * 10 ) / 10);
-    // console.log((Math.ceil( (curCharInfo.status.initATK / (5+curCharInfo.rarity)) * 10 ) / 10) * (5+star));
-    // console.log((Math.ceil( (curCharInfo.status.initATK / (5+curCharInfo.rarity)) * 10 ) / 10) * (5+star) * Math.pow(1.1, lv-1));
-    // console.log((Math.ceil( (curCharInfo.status.initATK / (5+curCharInfo.rarity)) * 10 ) / 10) * (5+star) * Math.pow(1.1, lv-1) * (1+(1+discipline)*discipline/2*0.05));
-    // console.log(Math.floor((Math.ceil( (curCharInfo.status.initATK / (5+curCharInfo.rarity)) * 10 ) / 10) * (5+star) * Math.pow(1.1, lv-1) * (1+(1+discipline)*discipline/2*0.05) * (1+atkBuff)));
-    // console.log(Math.floor((Math.ceil( (curCharInfo.status.initHP / (5+curCharInfo.rarity)) * 10 ) / 10) * (5+star) * Math.pow(1.1, lv-1) * (1+(1+discipline)*discipline/2*0.05) * (1+hpBuff)));
   } catch(e) {
-    alert('有地方出錯了，請叫那個低能作者儘快修復');
+    alert('有地方出錯了，叫那個低能作者儘快修復');
   }
 }
