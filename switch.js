@@ -28,7 +28,7 @@
         });
 
         document.querySelectorAll(".btn").forEach((element) => {
-          element.className = element.className.replace(/-secondary/g, "-warning");
+          element.className = element.className.replace(/-danger/g, "-warning");
         });
 
         document.getElementById('filtered').className = document.getElementById('filtered').className.replace(/-light/g, "-dark");
@@ -63,7 +63,7 @@
         });
 
         document.querySelectorAll(".btn").forEach((element) => {
-          element.className = element.className.replace(/-warning/g, "-secondary");
+          element.className = element.className.replace(/-warning/g, "-danger");
         });
 
         document.getElementById('filtered').className = document.getElementById('filtered').className.replace(/-dark/g, "-light");

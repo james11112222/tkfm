@@ -71,10 +71,29 @@ label.btn-outline-warning:hover {
 .text-small {
   font-size: 0.7em;
 }
+.charName {
+  padding: 0 5px;
+}
+.tagIcon {
+  width: 0;
+}
 .tooltip-inner {
+  text-align: left !important;
   white-space: pre-wrap;
   font-size: 16px;
 }
 .material-icons {
   font-size: 16px !important;
+}
+.guarantee {
+  display: flex;
+  align-items: center;
+}
+#filtered {
+  vertical-align: middle;
+}
+@media (max-width: 768px) {
+  .col-4 {
+    width: 29% !important;
+  }
 }
