@@ -41,7 +41,7 @@ const CHARACTERS = {
     "recruitable": true,
     "potentialType": 2
   },
-  "105": {
+  "106": {
     "name": "天使長 聖米勒",
     "rarity": 3,
     "status": { "initATK": 940.8, "initHP": 3395.2 },
@@ -123,7 +123,7 @@ const CHARACTERS = {
     "rarity": 3,
     "status": { "initATK": 675.2, "initHP": 4729.6 },
     "recruitable": false,
-    "potentialType": 5
+    "potentialType": 2
   },
   "117": {
     "name": "剪裁之紅 安絲蒂",
@@ -151,7 +151,7 @@ const CHARACTERS = {
     "rarity": 3,
     "status": { "initATK": 948.8, "initHP": 3368 },
     "recruitable": false,
-    "potentialType": 5
+    "potentialType": 0
   },
   "120": {
     "name": "煌星 妲絲艾菲娜",
@@ -165,7 +165,7 @@ const CHARACTERS = {
     "rarity": 3,
     "status": { "initATK": 948.8, "initHP": 3368 },
     "recruitable": false,
-    "potentialType": 5
+    "potentialType": 0
   },
   "163": {
     "name": "豐收聖女 菲歐菈",

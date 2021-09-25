@@ -1,0 +1,261 @@
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="../css/init.css" rel="stylesheet">
+    <link href="../css/custom.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css?family=Material+Icons" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>
+    <script src="../data/characterInfo.js"></script>
+    <script src="../data/characterStatus.js"></script>
+    <script src="../data/recruitmentTagInfo.js"></script>
+  </head>
+  <body>
+    <div class="container p-4">
+      <div class="form-check form-switch ms-auto mt-3 me-3 m-3">
+        <label class="form-check-label ms-3" for="lightSwitch">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="25"
+            height="25"
+            fill="currentColor"
+            class="bi bi-brightness-high"
+            viewBox="0 0 16 16">
+            <path
+              d="M8 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm0 1a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"
+            />
+          </svg>
+        </label>
+        <input class="form-check-input pointer" type="checkbox" id="lightSwitch" />
+      </div>
+      <div class="row gap-3">
+        <div class="col-md-6 col-xs-12 border border-2 border-danger rounded-3">
+          <div class="border-bottom border-danger my-3">標籤選擇</div>
+          <div class="fieldset border border-danger rounded-3 my-3">
+            <span>屬性</span>
+            <input type="checkbox" class="btn-check" id="fire" autocomplete="off">
+            <label class="btn btn-outline-secondary m-1 col-md-2 col-sm-2 col-xs-2" for="fire">火屬性</label>
+            <input type="checkbox" class="btn-check" id="water" autocomplete="off">
+            <label class="btn btn-outline-secondary m-1 col-md-2 col-sm-2 col-xs-2" for="water">水屬性</label>
+            <input type="checkbox" class="btn-check" id="wind" autocomplete="off">
+            <label class="btn btn-outline-secondary m-1 col-md-2 col-sm-2 col-xs-2" for="wind">風屬性</label>
+            <input type="checkbox" class="btn-check" id="light" autocomplete="off">
+            <label class="btn btn-outline-secondary m-1 col-md-2 col-sm-2 col-xs-2" for="light">光屬性</label>
+            <input type="checkbox" class="btn-check" id="dark" autocomplete="off">
+            <label class="btn btn-outline-secondary m-1 col-md-2 col-sm-2 col-xs-2" for="dark">闇屬性</label>
+          </div>
+          <div class="fieldset border border-danger rounded-3 my-3">
+            <span>定位</span>
+            <input type="checkbox" class="btn-check" id="attacker" autocomplete="off">
+            <label class="btn btn-outline-secondary m-1 col-md-2 col-sm-2 col-xs-2" for="attacker">攻擊者</label>
+            <input type="checkbox" class="btn-check" id="protector" autocomplete="off">
+            <label class="btn btn-outline-secondary m-1 col-md-2 col-sm-2 col-xs-2" for="protector">守護者</label>
+            <input type="checkbox" class="btn-check" id="healer" autocomplete="off">
+            <label class="btn btn-outline-secondary m-1 col-md-2 col-sm-2 col-xs-2" for="healer">治療者</label>
+            <input type="checkbox" class="btn-check" id="obstructer" autocomplete="off">
+            <label class="btn btn-outline-secondary m-1 col-md-2 col-sm-2 col-xs-2" for="obstructer">妨礙者</label>
+            <input type="checkbox" class="btn-check" id="support" autocomplete="off">
+            <label class="btn btn-outline-secondary m-1 col-md-2 col-sm-2 col-xs-2" for="support">輔助者</label>
+          </div>
+          <div class="fieldset border border-danger rounded-3 my-3">
+            <span>種族</span>
+            <input type="checkbox" class="btn-check" id="human" autocomplete="off">
+            <label class="btn btn-outline-secondary m-1 col-md-2 col-sm-2 col-xs-2" for="human">人類</label>
+            <input type="checkbox" class="btn-check" id="demon" autocomplete="off">
+            <label class="btn btn-outline-secondary m-1 col-md-2 col-sm-2 col-xs-2" for="demon">魔族</label>
+            <input type="checkbox" class="btn-check" id="demihuman" autocomplete="off">
+            <label class="btn btn-outline-secondary m-1 col-md-2 col-sm-2 col-xs-2" for="demihuman">亞人</label>
+          </div>
+          <div class="fieldset border border-danger rounded-3 my-3">
+            <span>體型</span>
+            <input type="checkbox" class="btn-check" id="smallSized" autocomplete="off">
+            <label class="btn btn-outline-secondary m-1 col-md-2 col-sm-2 col-xs-2" for="smallSized">小體型</label>
+            <input type="checkbox" class="btn-check" id="mediumSized" autocomplete="off">
+            <label class="btn btn-outline-secondary m-1 col-md-2 col-sm-2 col-xs-2" for="mediumSized">中體型</label>
+          </div>
+          <div class="fieldset border border-danger rounded-3 my-3">
+            <span>ㄋㄋ</span>
+            <input type="checkbox" class="btn-check" id="flatTits" autocomplete="off">
+            <label class="btn btn-outline-secondary m-1 col-md-2 col-sm-2 col-xs-2" for="flatTits">貧乳</label>
+            <input type="checkbox" class="btn-check" id="hotTits" autocomplete="off">
+            <label class="btn btn-outline-secondary m-1 col-md-2 col-sm-2 col-xs-2" for="hotTits">美乳</label>
+            <input type="checkbox" class="btn-check" id="giantTits" autocomplete="off">
+            <label class="btn btn-outline-secondary m-1 col-md-2 col-sm-2 col-xs-2" for="giantTits">巨乳</label>
+          </div>
+          <div class="fieldset border border-danger rounded-3 my-3">
+            <span>階級</span>
+            <input type="checkbox" class="btn-check" id="soldier" autocomplete="off">
+            <label class="btn btn-outline-secondary m-1 col-md-2 col-sm-2 col-xs-2" for="soldier">士兵</label>
+            <input type="checkbox" class="btn-check" id="elite" autocomplete="off">
+            <label class="btn btn-outline-secondary m-1 col-md-2 col-sm-2 col-xs-2" for="elite">菁英</label>
+            <input type="checkbox" class="btn-check" id="leader" autocomplete="off">
+            <label class="btn btn-outline-secondary m-1 col-md-2 col-sm-2 col-xs-2" for="leader">領袖</label>
+          </div>
+          <div class="fieldset border border-danger rounded-3 my-3">
+            <span>其他</span>
+            <input type="checkbox" class="btn-check" id="dmgOutput" autocomplete="off">
+            <label class="btn btn-outline-secondary m-1 col-md-2 col-sm-2 col-xs-2" for="dmgOutput">輸出</label>
+            <input type="checkbox" class="btn-check" id="protection" autocomplete="off">
+            <label class="btn btn-outline-secondary m-1 col-md-2 col-sm-2 col-xs-2" for="protection">保護</label>
+            <input type="checkbox" class="btn-check" id="defense" autocomplete="off">
+            <label class="btn btn-outline-secondary m-1 col-md-2 col-sm-2 col-xs-2" for="defense">防禦</label>
+            <input type="checkbox" class="btn-check" id="recovery" autocomplete="off">
+            <label class="btn btn-outline-secondary m-1 col-md-2 col-sm-2 col-xs-2" for="recovery">回復</label>
+            <input type="checkbox" class="btn-check" id="interference" autocomplete="off">
+            <label class="btn btn-outline-secondary m-1 col-md-2 col-sm-2 col-xs-2" for="interference">干擾</label>
+            <input type="checkbox" class="btn-check" id="sup" autocomplete="off">
+            <label class="btn btn-outline-secondary m-1 col-md-2 col-sm-2 col-xs-2" for="sup">支援</label>
+            <input type="checkbox" class="btn-check" id="weaken" autocomplete="off">
+            <label class="btn btn-outline-secondary m-1 col-md-2 col-sm-2 col-xs-2" for="weaken">削弱</label>
+            <input type="checkbox" class="btn-check" id="explosiveness" autocomplete="off">
+            <label class="btn btn-outline-secondary m-1 col-md-2 col-sm-2 col-xs-2" for="explosiveness">爆發力</label>
+            <input type="checkbox" class="btn-check" id="survivability" autocomplete="off">
+            <label class="btn btn-outline-secondary m-1 col-md-2 col-sm-2 col-xs-2" for="survivability">生存力</label>
+            <input type="checkbox" class="btn-check" id="morePower" autocomplete="off">
+            <label class="btn btn-outline-secondary m-1 col-md-2 col-sm-2 col-xs-2 text-nowrap" for="morePower">越戰越強</label>
+            <input type="checkbox" class="btn-check" id="aoe" autocomplete="off">
+            <label class="btn btn-outline-secondary m-1 col-md-2 col-sm-2 col-xs-2 text-nowrap" for="aoe">群體攻擊</label>
+            <input type="checkbox" class="btn-check" id="counterstrike" autocomplete="off">
+            <label class="btn btn-outline-secondary m-1 col-md-2 col-sm-2 col-xs-2" for="counterstrike">回擊</label>
+          </div>
+        </div>
+        <div class="col-md-5 col-xs-12 border border-2 border-danger rounded-3 gap-3 p-3">
+          <div class="border-bottom border-danger">篩選結果</div>
+          <div>
+            <table id="filtered" class="table table-responsive table-light">
+              <thead>
+                <tr>
+                  <th>名字</th>
+                  <th>稀有度</th>
+                  <th>應用標籤</th>
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+<script>
+  $(function(){
+    $('.btn-check').each((i, v) => v.value = i);
+    $(document).on('change', '.btn-check', () => {
+      let $result = $('#filtered tbody');
+
+      $result.empty();
+      if ($('.btn-check:checked').length) {
+        let selectedTagArray = $('.btn-check:checked').map((_, v) => v.value).get();
+        let tagSets = [];
+        let guaranteeSets = {};
+        let leaderTag;
+
+        if (selectedTagArray.includes('20')) leaderTag = true;
+        selectedTagArray.forEach((v) => {
+          tagSets.push(leaderTag ? RECRUITMENTTAGS[v].hasChar : RECRUITMENTTAGS[v].hasChar.filter((char) => CHARACTERS[char].rarity < 3));
+        });
+        // console.log(tagSets);
+        // $('.btn-check:checked').each((i,v) => {
+        //   $(v).next().text()
+        // })
+        // [a, b].reduce((c, d) => c.filter(i => d.includes(i)) )
+        tagSets.forEach((v, i) => {
+          // console.log('1st index', [i+1]);
+          if (v.length == 1) {
+            if (guaranteeSets[v[0]]) guaranteeSets[v[0]].push([RECRUITMENTTAGS[selectedTagArray[i]].name]);
+            else guaranteeSets[v[0]] = [[RECRUITMENTTAGS[selectedTagArray[i]].name]];
+          }
+          // console.log('1st guarantee', guaranteeSets);
+          if (tagSets[i+1]) {
+            for (let j = i+1; j < tagSets.length; j++) {
+              let intersection = [tagSets[i], tagSets[j]].reduce((a, b) => a.filter(value => b.includes(value)) );
+              if (intersection.length == 1) {
+                if (guaranteeSets[intersection[0]]) guaranteeSets[intersection[0]].push([RECRUITMENTTAGS[selectedTagArray[i]].name, RECRUITMENTTAGS[selectedTagArray[j]].name]);
+                else guaranteeSets[intersection[0]] = [[RECRUITMENTTAGS[selectedTagArray[i]].name, RECRUITMENTTAGS[selectedTagArray[j]].name]];
+              }
+              // console.log('2nd index', [i+1, j+1]);
+              // console.log('2nd guarantee', guaranteeSets);
+              // console.log('2nd intersection', intersection);
+              if (tagSets[j+1]) {
+                for (let k = j+1; k < tagSets.length; k++) {
+                  let intersection = [tagSets[i], tagSets[j], tagSets[k]].reduce((a, b) => a.filter(value => b.includes(value)) );
+                  if (intersection.length == 1) {
+                    if (guaranteeSets[intersection[0]]) guaranteeSets[intersection[0]].push([RECRUITMENTTAGS[selectedTagArray[i]].name, RECRUITMENTTAGS[selectedTagArray[j]].name, RECRUITMENTTAGS[selectedTagArray[k]].name]);
+                    else guaranteeSets[intersection[0]] = [[RECRUITMENTTAGS[selectedTagArray[i]].name, RECRUITMENTTAGS[selectedTagArray[j]].name, RECRUITMENTTAGS[selectedTagArray[k]].name]];
+                  }
+                  // console.log('3rd index', [i+1, j+1, k+1]);
+                  // console.log('3rd guarantee', guaranteeSets);
+                  // console.log('3rd intersection', intersection);
+                }
+              }
+            }
+          }
+        })
+        $.each(guaranteeSets, (k, arrSet) => {
+          let duplicated = []
+
+          arrSet.sort((a,b) => a.length - b.length).forEach((arr, idx) => {
+            for (let i = idx+1; i < arrSet.length; i++) {
+              if (arr.every((value) => arrSet[i].includes(value))) {
+                if (!duplicated.includes(i)) duplicated.push(i);
+              }
+            }
+          })
+          guaranteeSets[k] = arrSet.filter((arr, i) => !duplicated.includes(i));
+        })
+        console.log(guaranteeSets);
+
+        // console.log('intersection', tagSets.reduce((c, d) => c.filter(i => d.includes(i)) ));
+        let chars = [ ...new Set(tagSets.flat())].sort();
+        // console.log(chars);
+        $.each(chars, (i, charId) => {
+          let charInfo = CHARACTERS[charId];
+          let charName = charInfo.name.split(' ')[1] || charInfo.name.split(' ')[0];
+          let charTitle;
+          let applyTags = [];
+          let rarity;
+          let opt = {};
+          let icon = '';
+
+          if (charInfo.name.split(' ')[1]) charTitle = charInfo.name.split(' ')[0];
+          switch (charInfo.rarity) {
+            case 0:
+              rarity = 'N';
+            break;
+            case 1:
+              rarity = 'R';
+            break;
+            case 2:
+              rarity = 'SR';
+            break;
+            case 3:
+              rarity = 'SSR';
+          }
+
+          selectedTagArray.forEach((tagId) => {
+            if (RECRUITMENTTAGS[tagId].hasChar.includes(charId)) applyTags.push(RECRUITMENTTAGS[tagId].name)
+          });
+
+          if ( Object.keys(guaranteeSets).includes(String(charId)) ) {
+            opt = { class: "guarantee", "data-bs-placement": "bottom", title: guaranteeSets[charId].map((tags) => tags.join(',')).join("\n") }
+            icon = ' <div class="material-icons">stars</div>'
+          }
+
+          $result.append($('<tr>').append($('<td>', opt)
+            .append($('<span>', { text: charTitle, class: 'text-small' })).append(' ')
+            .append(charName + icon) )
+            .append($('<td>', { text: rarity }))
+            .append($('<td>', { text: applyTags.join(', ') }))
+          );
+        })
+        $('.guarantee').tooltip();
+      }
+    })
+  })
+</script>
+<script src="../switch.js"></script>

@@ -1,0 +1,80 @@
+body {
+  background-color: #383838;
+}
+.slim.table>:not(caption) > * > * {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+.slim .form-control {
+  padding-top: 0;
+  padding-bottom: 0;
+  line-height: normal;
+}
+input {
+  text-align: right;
+}
+/* .row {
+  align-items: center;
+} */
+input[type='number'] {
+  width: 10em;
+  margin: auto;
+}
+.form-check-inline {
+  margin-right: auto !important;
+}
+.pointer {
+  cursor: pointer;
+}
+input[type='checkbox'].skillPot:checked {
+  background-color: #CE93D8;
+}
+input[type='checkbox'].hpPot:checked,
+.resultHpLabel {
+  background-color: #A5D6A7 !important;
+}
+input[type='checkbox'].atkPot:checked,
+.resultAtkLabel {
+  background-color: #EF9A9A !important;
+}
+.w-max {
+  width:100%;
+}
+.fieldset {
+  position: relative;
+  border: 1px solid #ddd;
+  padding: 10px;
+}
+.fieldset span {
+  position: absolute;
+  top: 0;
+  font-size: 13px;
+  line-height: 1;
+  margin: -9px 0 0; /* half of font-size */
+  background: #dc3545;
+  color: #ffffff;
+  padding: 3px 3px;
+  border-radius: 8px;
+}
+label.btn-outline-secondary:hover {
+  border: 1px solid #6c757d;
+  box-shadow: #6c757d 0px 0px 0.5rem inset, #6c757d 0px 0px 0.1rem;
+  background-color: #f8f9fa;
+  color: #6c757d;
+}
+label.btn-outline-warning:hover {
+  border: 1px solid #ffc107;
+  box-shadow: #ffc107 0px 0px 0.5rem inset, #ffc107 0px 0px 0.1rem;
+  background-color: #212529;
+  color: #ffc107;
+}
+.text-small {
+  font-size: 0.7em;
+}
+.tooltip-inner {
+  white-space: pre-wrap;
+  font-size: 16px;
+}
+.material-icons {
+  font-size: 16px !important;
+}
