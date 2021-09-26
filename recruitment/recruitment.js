@@ -1,6 +1,9 @@
 $(function(){
   $('.btn-check').each((i, v) => v.value = i);
   toastr.options = { "preventDuplicates": true };
+
+  $("#clearTagButton").click(() => $('.btn-check:checked').click() )
+
   $(document).on('change', '.btn-check', (event) => {
     if ($('.btn-check:checked').length > 5) {
       let $btn = $(event.currentTarget);
@@ -167,7 +170,7 @@ $(function(){
             .append($('<span>', { text: charName, class: 'charName' }))
             .append($('<div>', { class: 'tagIcon' })
               .append(icon)) )
-          .append($('<td>', { text: rarity }))
+          .append($('<td>', { text: rarity, class: 'rarity' }))
           .append($('<td>', { text: applyTags.join(', ') }))
         );
       })
