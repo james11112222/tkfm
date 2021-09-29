@@ -92,13 +92,16 @@ label.btn-outline-warning:hover {
 #filtered {
   vertical-align: middle;
 }
-#clearTagButton {
+#clearTagButton, #listStyle {
   font-size: 14px;
   padding: 0 .375rem;
   float: right;
 }
 #filtered .rarity {
   margin-left: 1.2em;
+}
+.nowrap {
+  white-space: nowrap;
 }
 @media (max-width: 768px) {
   .col-4 {

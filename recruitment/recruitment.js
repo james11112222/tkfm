@@ -1,8 +1,16 @@
 $(function(){
+  let listSwitch = $('#listStyle');
+
+  toggleStyle(localStorage.getItem("listSwitch"));
+  listSwitch.click(() => {
+    toggleStyle(localStorage.getItem("listSwitch"));
+  })
+
   $('.btn-check').each((i, v) => v.value = i);
   toastr.options = { "preventDuplicates": true };
 
-  $("#clearTagButton").click(() => $('.btn-check:checked').click() )
+  $('#clearTagButton').click(() => $('.btn-check:checked').click() )
+  $('#listStyle').click(() => $('.btn-check:first').change() )
 
   $(document).on('change', '.btn-check', (event) => {
     if ($('.btn-check:checked').length > 5) {
@@ -18,9 +26,11 @@ $(function(){
     $result.empty();
     if ($('.btn-check:checked').length) {
       let selectedTagArray = $('.btn-check:checked').map((_, v) => v.value).get();
+      let listType = localStorage.getItem("listSwitch");
       let tagSets = [];
       let guaranteeSets = {};
       let guaranteeSRSets = {};
+      let allIntersections = [];
       let leaderTag;
 
       if (selectedTagArray.includes('20')) leaderTag = true;
@@ -29,6 +39,7 @@ $(function(){
       });
 
       tagSets.forEach((v, i) => {
+        allIntersections.push([[RECRUITMENTTAGS[selectedTagArray[i]].name], v]);
         if (v.length == 1) {
           if (guaranteeSets[v[0]]) guaranteeSets[v[0]].push([RECRUITMENTTAGS[selectedTagArray[i]].name]);
           else guaranteeSets[v[0]] = [[RECRUITMENTTAGS[selectedTagArray[i]].name]];
@@ -45,6 +56,7 @@ $(function(){
           for (let j = i+1; j < tagSets.length; j++) {
             let intersection = [tagSets[i], tagSets[j]].reduce((a, b) => a.filter(value => b.includes(value)) );
 
+            if (intersection.length > 0) allIntersections.push([[RECRUITMENTTAGS[selectedTagArray[i]].name, RECRUITMENTTAGS[selectedTagArray[j]].name], intersection]);
             if (intersection.length == 1) {
               if (guaranteeSets[intersection[0]]) guaranteeSets[intersection[0]].push([RECRUITMENTTAGS[selectedTagArray[i]].name, RECRUITMENTTAGS[selectedTagArray[j]].name]);
               else guaranteeSets[intersection[0]] = [[RECRUITMENTTAGS[selectedTagArray[i]].name, RECRUITMENTTAGS[selectedTagArray[j]].name]];
@@ -61,6 +73,7 @@ $(function(){
               for (let k = j+1; k < tagSets.length; k++) {
                 let intersection = [tagSets[i], tagSets[j], tagSets[k]].reduce((a, b) => a.filter(value => b.includes(value)) );
 
+                if (intersection.length > 0) allIntersections.push([[RECRUITMENTTAGS[selectedTagArray[i]].name, RECRUITMENTTAGS[selectedTagArray[j]].name, RECRUITMENTTAGS[selectedTagArray[k]].name], intersection]);
                 if (intersection.length == 1) {
                   if (guaranteeSets[intersection[0]]) guaranteeSets[intersection[0]].push([RECRUITMENTTAGS[selectedTagArray[i]].name, RECRUITMENTTAGS[selectedTagArray[j]].name, RECRUITMENTTAGS[selectedTagArray[k]].name]);
                   else guaranteeSets[intersection[0]] = [[RECRUITMENTTAGS[selectedTagArray[i]].name, RECRUITMENTTAGS[selectedTagArray[j]].name, RECRUITMENTTAGS[selectedTagArray[k]].name]];
@@ -78,103 +91,137 @@ $(function(){
         }
       })
 
-      $.each(guaranteeSRSets, (k, arrSet) => {
-        let duplicated = []
-
-        arrSet.sort((a, b) => a.length - b.length).forEach((arr, idx) => {
-          for (let i = idx+1; i < arrSet.length; i++) {
-            if (arr.every((value) => arrSet[i].includes(value))) {
-              if (!duplicated.includes(i)) duplicated.push(i);
-            }
-          }
+      if (listType == 'tag') {
+        allIntersections.sort((a, b) => {
+          if (a[1].length < b[1].length) return -1
+          else return 1
         })
-        guaranteeSRSets[k] = arrSet.filter((arr, i) => !duplicated.includes(i));
-      })
-
-      $.each(guaranteeSets, (k, arrSet) => {
-        let duplicated = []
-
-        arrSet.sort((a, b) => a.length - b.length).forEach((arr, idx) => {
-          for (let i = idx+1; i < arrSet.length; i++) {
-            if (arr.every((value) => arrSet[i].includes(value))) {
-              if (!duplicated.includes(i)) duplicated.push(i);
-            }
-          }
+        $.each(allIntersections, (i, intersection) => {
+          $result
+          $result.append($('<tr>').append($('<td>', { text: i+1 }))
+                .append($('<td>', { text: intersection[0].join(','), class: 'nowrap' }))
+                .append($('<td>', { text: intersection[1].map((charId) => { return CHARACTERS[charId].name.split(' ')[1] || CHARACTERS[charId].name.split(' ')[0] }).join(', ') } ))
+          );
         })
-        guaranteeSets[k] = arrSet.filter((arr, i) => !duplicated.includes(i));
-      })
+      } else {
+        $.each(guaranteeSRSets, (k, arrSet) => {
+          let duplicated = []
 
-      let chars = [ ...new Set(tagSets.flat())].sort((a, b) => {
-        let weightsA = 0;
-        let weightsB = 0;
+          arrSet.sort((a, b) => a.length - b.length).forEach((arr, idx) => {
+            for (let i = idx+1; i < arrSet.length; i++) {
+              if (arr.every((value) => arrSet[i].includes(value))) {
+                if (!duplicated.includes(i)) duplicated.push(i);
+              }
+            }
+          })
+          guaranteeSRSets[k] = arrSet.filter((arr, i) => !duplicated.includes(i));
+        })
 
-        if ( CHARACTERS[a].rarity == CHARACTERS[b].rarity ) {
-          if ( Object.keys(guaranteeSets).includes(String(a)) ) weightsA += 2;
-          if ( Object.keys(guaranteeSRSets).includes(String(a)) ) weightsA += 1;
-          if ( Object.keys(guaranteeSets).includes(String(b)) ) weightsB += 2;
-          if ( Object.keys(guaranteeSRSets).includes(String(b)) ) weightsB += 1;
+        $.each(guaranteeSets, (k, arrSet) => {
+          let duplicated = []
 
-          if (weightsA == weightsB) return a < b ? -1 : 1;
-          else if (weightsA > weightsB) return -1;
+          arrSet.sort((a, b) => a.length - b.length).forEach((arr, idx) => {
+            for (let i = idx+1; i < arrSet.length; i++) {
+              if (arr.every((value) => arrSet[i].includes(value))) {
+                if (!duplicated.includes(i)) duplicated.push(i);
+              }
+            }
+          })
+          guaranteeSets[k] = arrSet.filter((arr, i) => !duplicated.includes(i));
+        })
+
+        let chars = [ ...new Set(tagSets.flat())].sort((a, b) => {
+          let weightsA = 0;
+          let weightsB = 0;
+
+          if ( CHARACTERS[a].rarity == CHARACTERS[b].rarity ) {
+            if ( Object.keys(guaranteeSets).includes(String(a)) ) weightsA += 2;
+            if ( Object.keys(guaranteeSRSets).includes(String(a)) ) weightsA += 1;
+            if ( Object.keys(guaranteeSets).includes(String(b)) ) weightsB += 2;
+            if ( Object.keys(guaranteeSRSets).includes(String(b)) ) weightsB += 1;
+
+            if (weightsA == weightsB) return a < b ? -1 : 1;
+            else if (weightsA > weightsB) return -1;
+            else return 1;
+          }
+          else if (CHARACTERS[a].rarity > CHARACTERS[b].rarity) return -1;
           else return 1;
-        }
-        else if (CHARACTERS[a].rarity > CHARACTERS[b].rarity) return -1;
-        else return 1;
-      });
-
-      $.each(chars, (i, charId) => {
-        let charInfo = CHARACTERS[charId];
-        let charName = charInfo.name.split(' ')[1] || charInfo.name.split(' ')[0];
-        let charTitle;
-        let applyTags = [];
-        let rarity;
-        let opt = {};
-        let icon = '';
-
-        if (charInfo.name.split(' ')[1]) charTitle = charInfo.name.split(' ')[0];
-        switch (charInfo.rarity) {
-          case 0:
-            rarity = 'N';
-          break;
-          case 1:
-            rarity = 'R';
-          break;
-          case 2:
-            rarity = 'SR';
-          break;
-          case 3:
-            rarity = 'SSR';
-        }
-
-        selectedTagArray.forEach((tagId) => {
-          if (RECRUITMENTTAGS[tagId].hasChar.includes(charId)) applyTags.push(RECRUITMENTTAGS[tagId].name)
         });
 
-        if ( Object.keys(guaranteeSets).includes(String(charId)) ) {
-          opt = { class: "guarantee", "data-bs-placement": "bottom", title: guaranteeSets[charId].map((tags) => tags.join(', ')).join("\n") }
-          icon = '<span class="material-icons">stars</span>'
-        }
+        $.each(chars, (i, charId) => {
+          let charInfo = CHARACTERS[charId];
+          let charName = charInfo.name.split(' ')[1] || charInfo.name.split(' ')[0];
+          let charTitle;
+          let applyTags = [];
+          let rarity;
+          let opt = {};
+          let icon = '';
 
-        if ( Object.keys(guaranteeSRSets).includes(String(charId)) ) {
-          let msg;
+          if (charInfo.name.split(' ')[1]) charTitle = charInfo.name.split(' ')[0];
+          switch (charInfo.rarity) {
+            case 0:
+              rarity = 'N';
+            break;
+            case 1:
+              rarity = 'R';
+            break;
+            case 2:
+              rarity = 'SR';
+            break;
+            case 3:
+              rarity = 'SSR';
+          }
 
-          guaranteeSRSets[charId].unshift(["必得SR:"]);
-          msg = guaranteeSRSets[charId].map((tags) => tags.join(', ')).join("\n");
-          $.extend(opt, { class: "guarantee", "data-bs-placement": "bottom" });
-          opt.title ? opt.title += "\n" + msg : opt.title = msg
-          icon += '<span class="material-icons">local_offer</span>'
-        }
+          selectedTagArray.forEach((tagId) => {
+            if (RECRUITMENTTAGS[tagId].hasChar.includes(charId)) applyTags.push(RECRUITMENTTAGS[tagId].name)
+          });
 
-        $result.append($('<tr>').append($('<td>', opt)
-            .append($('<span>', { text: charTitle, class: 'text-small' }))
-            .append($('<span>', { text: charName, class: 'charName' }))
-            .append($('<div>', { class: 'tagIcon' })
-              .append(icon)) )
-          .append($('<td>', { text: rarity, class: 'rarity' }))
-          .append($('<td>', { text: applyTags.join(', ') }))
-        );
-      })
-      $('.guarantee').tooltip();
+          if ( Object.keys(guaranteeSets).includes(String(charId)) ) {
+            opt = { class: "guarantee", "data-bs-placement": "bottom", title: guaranteeSets[charId].map((tags) => tags.join(', ')).join("\n") }
+            icon = '<span class="material-icons">stars</span>'
+          }
+
+          if ( Object.keys(guaranteeSRSets).includes(String(charId)) ) {
+            let msg;
+
+            guaranteeSRSets[charId].unshift(["必得SR:"]);
+            msg = guaranteeSRSets[charId].map((tags) => tags.join(', ')).join("\n");
+            $.extend(opt, { class: "guarantee", "data-bs-placement": "bottom" });
+            opt.title ? opt.title += "\n" + msg : opt.title = msg
+            icon += '<span class="material-icons">local_offer</span>'
+          }
+
+          $result.append($('<tr>').append($('<td>', opt)
+              .append($('<span>', { text: charTitle, class: 'text-small' }))
+              .append($('<span>', { text: charName, class: 'charName' }))
+              .append($('<div>', { class: 'tagIcon' })
+                .append(icon)) )
+            .append($('<td>', { text: rarity, class: 'rarity' }))
+            .append($('<td>', { text: applyTags.join(', ') }))
+          );
+        })
+        $('.guarantee').tooltip();
+      }
     }
   })
 })
+
+function toggleStyle(listType) {
+  let $title = $('#filtered thead tr');
+  let initFlag = $('#listStyle').data('init');
+
+  if (initFlag) localStorage.setItem("listSwitch", listType == 'char' ? 'tag' : 'char');
+
+  if (localStorage.getItem("listSwitch") === "tag") {
+    $title.empty();
+    $title.append($('<th>', { text: '#' }))
+          .append($('<th>', { text: '標籤', class: 'text-center' }))
+          .append($('<th>', { text: '可能角色', class: 'text-center' }));
+  } else {
+    $title.empty();
+    $title.append($('<th>', { text: '名字', class: 'text-center' }))
+          .append($('<th>', { text: '稀有度' }))
+          .append($('<th>', { text: '應用標籤', class: 'text-center' }));
+  }
+  $('#listStyle').data('init', true);
+}
