@@ -149,6 +149,12 @@ const CHARACTERS = {
     "status": { "initATK": 745.6 , "initHP": 4724.8 },
     "potentialType": 2
   },
+  "165": {
+    "name": "墮龍 凱茜菲娜",
+    "rarity": 3,
+    "status": { "initATK": 632 , "initHP": 5059.2 },
+    "potentialType": 1
+  },
   "121": {
     "name": "魔管家 艾可",
     "rarity": 2,
@@ -214,6 +220,12 @@ const CHARACTERS = {
     "rarity": 2,
     "status": { "initATK": 537.6 , "initHP": 4550 },
     "potentialType": 1
+  },
+  "166": {
+    "name": "最後的銀龍 普莉希拉",
+    "rarity": 2,
+    "status": { "initATK": 793.8 , "initHP": 2928.8 },
+    "potentialType": 0
   },
   "131": {
     "name": "雙蛇軍團護士長 艾琳",
