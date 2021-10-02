@@ -1,5 +1,6 @@
 $(function(){
   let listSwitch = $('#listStyle');
+  const RARITY = { 0: 'N', 1: 'R', 2: 'SR', 3: 'SSR' };
 
   toggleStyle(localStorage.getItem("listSwitch"));
   listSwitch.click(() => {
@@ -97,7 +98,6 @@ $(function(){
           else return 1
         })
         $.each(allIntersections, (i, intersection) => {
-          $result
           $result.append($('<tr>').append($('<td>', { text: i+1 }))
                 .append($('<td>', { text: intersection[0].join(','), class: 'nowrap' }))
                 .append($('<td>', { text: intersection[1].map((charId) => { return CHARACTERS[charId].name.split(' ')[1] || CHARACTERS[charId].name.split(' ')[0] }).join(', ') } ))
@@ -105,7 +105,7 @@ $(function(){
         })
       } else {
         $.each(guaranteeSRSets, (k, arrSet) => {
-          let duplicated = []
+          let duplicated = [];
 
           arrSet.sort((a, b) => a.length - b.length).forEach((arr, idx) => {
             for (let i = idx+1; i < arrSet.length; i++) {
@@ -118,7 +118,7 @@ $(function(){
         })
 
         $.each(guaranteeSets, (k, arrSet) => {
-          let duplicated = []
+          let duplicated = [];
 
           arrSet.sort((a, b) => a.length - b.length).forEach((arr, idx) => {
             for (let i = idx+1; i < arrSet.length; i++) {
@@ -158,27 +158,13 @@ $(function(){
           let icon = '';
 
           if (charInfo.name.split(' ')[1]) charTitle = charInfo.name.split(' ')[0];
-          switch (charInfo.rarity) {
-            case 0:
-              rarity = 'N';
-            break;
-            case 1:
-              rarity = 'R';
-            break;
-            case 2:
-              rarity = 'SR';
-            break;
-            case 3:
-              rarity = 'SSR';
-          }
-
           selectedTagArray.forEach((tagId) => {
             if (RECRUITMENTTAGS[tagId].hasChar.includes(charId)) applyTags.push(RECRUITMENTTAGS[tagId].name)
           });
 
           if ( Object.keys(guaranteeSets).includes(String(charId)) ) {
-            opt = { class: "guarantee", "data-bs-placement": "bottom", title: guaranteeSets[charId].map((tags) => tags.join(', ')).join("\n") }
-            icon = '<span class="material-icons">stars</span>'
+            opt = { class: "guarantee", "data-bs-placement": "bottom", title: guaranteeSets[charId].map((tags) => tags.join(', ')).join("\n") };
+            icon = '<span class="material-icons">stars</span>';
           }
 
           if ( Object.keys(guaranteeSRSets).includes(String(charId)) ) {
@@ -188,7 +174,7 @@ $(function(){
             msg = guaranteeSRSets[charId].map((tags) => tags.join(', ')).join("\n");
             $.extend(opt, { class: "guarantee", "data-bs-placement": "bottom" });
             opt.title ? opt.title += "\n" + msg : opt.title = msg
-            icon += '<span class="material-icons">local_offer</span>'
+            icon += '<span class="material-icons">local_offer</span>';
           }
 
           $result.append($('<tr>').append($('<td>', opt)
@@ -196,14 +182,22 @@ $(function(){
               .append($('<span>', { text: charName, class: 'charName' }))
               .append($('<div>', { class: 'tagIcon' })
                 .append(icon)) )
-            .append($('<td>', { text: rarity, class: 'rarity' }))
+            .append($('<td>', { text: RARITY[charInfo.rarity], class: 'rarity' }))
             .append($('<td>', { text: applyTags.join(', ') }))
           );
         })
         $('.guarantee').tooltip();
       }
     }
-  })
+  });
+
+  createCharacterTags(RARITY);
+  $(window).resize(()=> createCharacterTags(RARITY));
+
+  $(document).on("click", '.triggerDiv',(event) => {
+    let $element = $(event.currentTarget);
+    $element.next('.collapse').collapse('toggle');
+  });
 })
 
 function toggleStyle(listType) {
@@ -220,8 +214,29 @@ function toggleStyle(listType) {
   } else {
     $title.empty();
     $title.append($('<th>', { text: '名字', class: 'text-center' }))
-          .append($('<th>', { text: '稀有度' }))
+          .append($('<th>', { text: '稀有度', class: 'nowrap' }))
           .append($('<th>', { text: '應用標籤', class: 'text-center' }));
   }
   $('#listStyle').data('init', true);
+}
+
+function createCharacterTags(RARITY) {
+  let partition = screen.width <= 576 ? 2 : 6
+
+  $('.vContainer').empty();
+  $.each(Object.entries(CHARACTERS).sort((a, b) => (a[1].rarity > b[1].rarity ? -1 : 1 )), (index, charInfo) => {
+    let tagArr = RECRUITMENTTAGS.map((v) => { if (v.hasChar.includes(parseInt(charInfo[0]))) return v.name}).filter(Boolean);
+    let newCharBlock = $('.charBlock:first').clone().removeClass('hide');
+    let charHeaderContent = [RARITY[charInfo[1].rarity], charInfo[1].name.split(' ')[1] ? "<span class='text-small'>"+charInfo[1].name.split(' ')[0]+"</span>" : "<span class='text-small'>　</span>", charInfo[1].name.split(' ')[1] || charInfo[1].name.split(' ')[0]].join('<br>');
+
+    newCharBlock.find('.triggerDiv').html(charHeaderContent)
+    .attr('aria-controls', 'char_'+charInfo[0])
+    .attr('data-bs-target', 'char_'+charInfo[0])
+    .next().attr('id', 'char_'+charInfo[0]);
+    if (!tagArr.length) { tagArr.push('目前徵才無法取得'); }
+    $.each(tagArr, (_, tag) => {
+      newCharBlock.find('tbody').append($('<tr>').append($('<td>', { text: tag })));
+    })
+    $('.vContainer').eq(index%partition).append(newCharBlock);
+  })
 }

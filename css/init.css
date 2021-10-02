@@ -1,3 +1,12 @@
+@media (max-width: 768px) {
+  .col-4 {
+    width: 29% !important;
+  }
+  .col-xs-6 {
+    flex: 0 0 auto !important;
+    width: 50% !important;
+  }
+}
 body {
   background-color: #383838;
 }
@@ -95,16 +104,36 @@ label.btn-outline-warning:hover {
 #clearTagButton, #listStyle {
   font-size: 14px;
   padding: 0 .375rem;
+  margin: 0 .375rem;
   float: right;
 }
 #filtered .rarity {
-  margin-left: 1.2em;
+  padding-left: 1.2em;
 }
 .nowrap {
   white-space: nowrap;
 }
-@media (max-width: 768px) {
-  .col-4 {
-    width: 29% !important;
-  }
+.charBlock {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  margin: 0 0 1rem;
+}
+.table {
+  margin-bottom: 0 !important;
+}
+.triggerDiv {
+  display: block !important;
+  padding: 0 .75rem;
+  text-align: center;
+  border-bottom: 1px solid;
+}
+.hide {
+  display: none;
+}
+.bg-dark.nav-link.active {
+  color: #fff !important;
+  border-color: #dee2e6 #dee2e6 #212529 !important;
+}
+.bg-dark.nav-link {
+  color: #C2C6CA !important;
 }

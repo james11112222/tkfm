@@ -31,6 +31,10 @@
           element.className = element.className.replace(/-danger/g, "-warning");
         });
 
+        document.querySelectorAll(".table-light").forEach((element) => {
+          element.className = element.className.replace(/-light/g, "-dark");
+        });
+
         document.getElementById('filtered').className = document.getElementById('filtered').className.replace(/-light/g, "-dark");
 
         document.body.classList.add("bg-dark");
@@ -64,6 +68,10 @@
 
         document.querySelectorAll(".btn").forEach((element) => {
           element.className = element.className.replace(/-warning/g, "-danger");
+        });
+
+        document.querySelectorAll(".table-dark").forEach((element) => {
+          element.className = element.className.replace(/-dark/g, "-light");
         });
 
         document.getElementById('filtered').className = document.getElementById('filtered').className.replace(/-dark/g, "-light");
