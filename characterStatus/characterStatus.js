@@ -32,15 +32,24 @@ $(function(){
     let $discipline = $element.closest('.charDiv').find('.discipline');
     let $pot = $element.closest('.charDiv').find('.potential');
     let curCharInfo = CHARACTERS[$element.val()];
+    let starVal = $star.val();
+    let disciplineVal = $discipline.val();
+    let potVal = $pot.val();
 
     try {
       $star.empty();
       $discipline.empty();
       $pot.empty();
       for (let i = curCharInfo.rarity; i <= 5; i++) $star.append($('<option>', { value: i, text: i }));
+      if (starVal) $star.val(starVal);
       for (let i = 1; i <= (curCharInfo.rarity < 2 ? 6 : 12); i++) $pot.append($('<option>', { value: i, text: i }));
+      if (potVal) $pot.val(potVal);
       if (curCharInfo.rarity < 1) $discipline.append($('<option>', { value: 0, text: '-' })).attr('disabled', true);
-      else for (let i = 0; i <= 3; i++) $discipline.append($('<option>', { value: i, text: i }));
+      else {
+        for (let i = 0; i <= 3; i++) $discipline.append($('<option>', { value: i, text: i }));
+        if (disciplineVal) $discipline.val(disciplineVal);
+      }
+      $('.potential').change();
       calculate($element.closest('.charDiv'));
     } catch(e) {
       errorAlert();
