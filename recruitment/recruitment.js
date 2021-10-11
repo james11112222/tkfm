@@ -153,7 +153,6 @@ $(function(){
           let charName = charInfo.name.split(' ')[1] || charInfo.name.split(' ')[0];
           let charTitle;
           let applyTags = [];
-          let rarity;
           let opt = {};
           let icon = '';
 
