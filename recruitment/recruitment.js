@@ -75,7 +75,7 @@ $(function(){
                 let intersection = [tagSets[i], tagSets[j], tagSets[k]].reduce((a, b) => a.filter(value => b.includes(value)) );
 
                 if (intersection.length > 0) allIntersections.push([[RECRUITMENTTAGS[selectedTagArray[i]].name, RECRUITMENTTAGS[selectedTagArray[j]].name, RECRUITMENTTAGS[selectedTagArray[k]].name], intersection]);
-                if (intersection.length == 1) {
+                if (intersection.length == 1 && (CHARACTERS[intersection[0]].rarity == 3 ? [selectedTagArray[i], selectedTagArray[j], selectedTagArray[k]].includes('20') : true)) {
                   if (guaranteeSets[intersection[0]]) guaranteeSets[intersection[0]].push([RECRUITMENTTAGS[selectedTagArray[i]].name, RECRUITMENTTAGS[selectedTagArray[j]].name, RECRUITMENTTAGS[selectedTagArray[k]].name]);
                   else guaranteeSets[intersection[0]] = [[RECRUITMENTTAGS[selectedTagArray[i]].name, RECRUITMENTTAGS[selectedTagArray[j]].name, RECRUITMENTTAGS[selectedTagArray[k]].name]];
                 } else {
