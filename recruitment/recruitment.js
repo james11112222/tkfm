@@ -220,7 +220,7 @@ function toggleStyle(listType) {
 }
 
 function createCharacterTags(RARITY) {
-  let partition = screen.width <= 576 ? 2 : 6
+  let partition = (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) ? 2 : 6
 
   $('.vContainer').empty();
   $.each(Object.entries(CHARACTERS).sort((a, b) => (a[1].rarity > b[1].rarity ? -1 : 1 )), (index, charInfo) => {
