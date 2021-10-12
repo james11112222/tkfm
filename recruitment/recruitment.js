@@ -40,7 +40,7 @@ $(function(){
       });
 
       tagSets.forEach((v, i) => {
-        allIntersections.push([[RECRUITMENTTAGS[selectedTagArray[i]].name], v]);
+        allIntersections.push([[RECRUITMENTTAGS[selectedTagArray[i]].name], v.filter((id) => ( [selectedTagArray[i]].includes('20') ? id : CHARACTERS[id].rarity < 3 ))]);
         if (v.length == 1) {
           if (guaranteeSets[v[0]]) guaranteeSets[v[0]].push([RECRUITMENTTAGS[selectedTagArray[i]].name]);
           else guaranteeSets[v[0]] = [[RECRUITMENTTAGS[selectedTagArray[i]].name]];
@@ -57,7 +57,7 @@ $(function(){
           for (let j = i+1; j < tagSets.length; j++) {
             let intersection = [tagSets[i], tagSets[j]].reduce((a, b) => a.filter(value => b.includes(value)) );
 
-            if (intersection.length > 0) allIntersections.push([[RECRUITMENTTAGS[selectedTagArray[i]].name, RECRUITMENTTAGS[selectedTagArray[j]].name], intersection]);
+            if (intersection.length > 0 && intersection.filter((id) => ( [selectedTagArray[i], selectedTagArray[j]].includes('20') ? id : CHARACTERS[id].rarity < 3 )).length > 0) allIntersections.push([[RECRUITMENTTAGS[selectedTagArray[i]].name, RECRUITMENTTAGS[selectedTagArray[j]].name], intersection.filter((id) => ( [selectedTagArray[i], selectedTagArray[j]].includes('20') ? id : CHARACTERS[id].rarity < 3 ))]);
             if (intersection.length == 1) {
               if (guaranteeSets[intersection[0]]) guaranteeSets[intersection[0]].push([RECRUITMENTTAGS[selectedTagArray[i]].name, RECRUITMENTTAGS[selectedTagArray[j]].name]);
               else guaranteeSets[intersection[0]] = [[RECRUITMENTTAGS[selectedTagArray[i]].name, RECRUITMENTTAGS[selectedTagArray[j]].name]];
@@ -74,7 +74,7 @@ $(function(){
               for (let k = j+1; k < tagSets.length; k++) {
                 let intersection = [tagSets[i], tagSets[j], tagSets[k]].reduce((a, b) => a.filter(value => b.includes(value)) );
 
-                if (intersection.length > 0) allIntersections.push([[RECRUITMENTTAGS[selectedTagArray[i]].name, RECRUITMENTTAGS[selectedTagArray[j]].name, RECRUITMENTTAGS[selectedTagArray[k]].name], intersection]);
+                if (intersection.length > 0 && intersection.filter((id) => ( [selectedTagArray[i], selectedTagArray[j], selectedTagArray[k]].includes('20') ? id : CHARACTERS[id].rarity < 3 )).length > 0) allIntersections.push([[RECRUITMENTTAGS[selectedTagArray[i]].name, RECRUITMENTTAGS[selectedTagArray[j]].name, RECRUITMENTTAGS[selectedTagArray[k]].name], intersection.filter((id) => ( [selectedTagArray[i], selectedTagArray[j], selectedTagArray[k]].includes('20') ? id : CHARACTERS[id].rarity < 3 ))]);
                 if (intersection.length == 1 && (CHARACTERS[intersection[0]].rarity == 3 ? [selectedTagArray[i], selectedTagArray[j], selectedTagArray[k]].includes('20') : true)) {
                   if (guaranteeSets[intersection[0]]) guaranteeSets[intersection[0]].push([RECRUITMENTTAGS[selectedTagArray[i]].name, RECRUITMENTTAGS[selectedTagArray[j]].name, RECRUITMENTTAGS[selectedTagArray[k]].name]);
                   else guaranteeSets[intersection[0]] = [[RECRUITMENTTAGS[selectedTagArray[i]].name, RECRUITMENTTAGS[selectedTagArray[j]].name, RECRUITMENTTAGS[selectedTagArray[k]].name]];
@@ -95,6 +95,7 @@ $(function(){
       if (listType == 'tag') {
         allIntersections.sort((a, b) => {
           if (a[1].length < b[1].length) return -1
+          else if (a[1].length == b[1].length && Math.max(...a[1].map((v) => CHARACTERS[v].rarity)) > Math.max(...b[1].map((v) => CHARACTERS[v].rarity)) ) return -1
           else return 1
         })
         $.each(allIntersections, (i, intersection) => {
