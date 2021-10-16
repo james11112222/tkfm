@@ -155,6 +155,12 @@ const CHARACTERS = {
     "status": { "initATK": 632 , "initHP": 5059.2 },
     "potentialType": 1
   },
+  "167": {
+    "name": "極樂之鬼 伊吹朱點",
+    "rarity": 3,
+    "status": { "initATK": 958.4 , "initHP": 3332.8 },
+    "potentialType": 0
+  },
   "121": {
     "name": "魔管家 艾可",
     "rarity": 2,
@@ -225,6 +231,12 @@ const CHARACTERS = {
     "name": "最後的銀龍 普莉希拉",
     "rarity": 2,
     "status": { "initATK": 793.8 , "initHP": 2928.8 },
+    "potentialType": 0
+  },
+  "168": {
+    "name": "刺針 嘉維爾",
+    "rarity": 2,
+    "status": { "initATK": 750.4 , "initHP": 3102.4 },
     "potentialType": 0
   },
   "131": {
