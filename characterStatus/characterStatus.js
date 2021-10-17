@@ -23,6 +23,7 @@ $(function(){
       // for (let i = 1; i <= 5; i++) $div.find('.bond').append($('<option>', { value: i, text: i }));
     })
   } catch(e) {
+    console.error(e);
     errorAlert();
   }
 
@@ -35,6 +36,7 @@ $(function(){
     let starVal = $star.val();
     let disciplineVal = $discipline.val();
     let potVal = $pot.val();
+    let $targetPot = $('.targetPot .potential');
 
     try {
       $star.empty();
@@ -42,16 +44,24 @@ $(function(){
       $pot.empty();
       for (let i = curCharInfo.rarity; i <= 5; i++) $star.append($('<option>', { value: i, text: i }));
       if (starVal) $star.val(starVal);
-      for (let i = 1; i <= (curCharInfo.rarity < 2 ? 6 : 12); i++) $pot.append($('<option>', { value: i, text: i }));
-      if (potVal) $pot.val(potVal);
+      for (let i = 1; i <= (curCharInfo.rarity < 2 ? 6 : 12); i++) {
+        $pot.append($('<option>', { value: i, text: i }));
+        $targetPot.append($('<option>', { value: i, text: i }));
+      }
+      if (potVal) {
+        $pot.val( curCharInfo.rarity < 2 && potVal > 6 ? 6 : potVal);
+        $targetPot.val( curCharInfo.rarity < 2 && potVal > 6 ? 6 : potVal);
+      }
       if (curCharInfo.rarity < 1) $discipline.append($('<option>', { value: 0, text: '-' })).attr('disabled', true);
       else {
+        $discipline.removeAttr('disabled');
         for (let i = 0; i <= 3; i++) $discipline.append($('<option>', { value: i, text: i }));
         if (disciplineVal) $discipline.val(disciplineVal);
       }
       $('.potential').change();
       calculate($element.closest('.charDiv'));
     } catch(e) {
+      console.error(e);
       errorAlert();
     }
   })
@@ -59,48 +69,61 @@ $(function(){
 
   $(document).on('change', '.potential', (event) => {
     let $element = $(event.currentTarget);
-    let charId = $element.closest('.charDiv').find('.char').val();
+    let charId = $('.charDiv').find('.char').val();
+    let potLayer = POTENTIALS[CHARACTERS[charId].potentialType][$element.val()] || POTENTIALS[CHARACTERS[charId].potentialType][6];
 
     try {
       for (let i = 1; i <= 6; i++) {
-        $element.siblings().find('input:eq(' + (i-1) + ')').attr('class', 'subPot form-check-input pointer ' + POTENTIALS[CHARACTERS[charId].potentialType][$element.val()][i].type + 'Pot');
+        $element.siblings().find('input:eq(' + (i-1) + ')').attr('class', 'subPot form-check-input pointer ' + potLayer[i].type + 'Pot');
       }
-      calculate($element.closest('.charDiv'));
+      changeTargetPot();
+      calculate($('.charDiv'));
+      calculate($('.charDiv'), $('.targetDiv'));
     } catch(e) {
+      console.error(e);
       errorAlert();
     }
   })
   $('.potential').change();
 
-  $(document).on('change', ".subPot, .lv, .star, .discipline", (event) => {
-    let $element = $(event.currentTarget);
-
-    calculate($element.closest('.charDiv'));
-  })
+  $(document).on('change', ".subPot", (event) => (changeTargetPot(event.currentTarget)) );
+  $(document).on('change', ".subPot, .lv, .star, .discipline", () => (calculate($('.charDiv')), calculate($('.charDiv'), $('.targetDiv'))) );
 });
 
-function calculate($charDiv){
+function calculate($charDiv, $targetDiv = null){
   let atkBuff = 0, hpBuff = 0;
   let curCharInfo = CHARACTERS[$charDiv.find('.char').val()];
   let lv = parseInt($charDiv.find('.lv').val());
   let star = parseInt($charDiv.find('.star').val());
   let discipline = parseInt($charDiv.find('.discipline').val());
+  let $resultDiv = $targetDiv || $charDiv;
 
   try {
-    for (let i = $charDiv.find('.potential').val()-1; i >= 1; i--) {
-      atkBuff += $.map(POTENTIALS[curCharInfo.potentialType][i], (v, k) => { if (v.type == 'atk') return v.buff}).reduce((a,b)=>a+b, 0)
-      hpBuff += $.map(POTENTIALS[curCharInfo.potentialType][i], (v, k) => { if (v.type == 'hp') return v.buff}).reduce((a,b)=>a+b, 0)
+    for (let i = $resultDiv.find('.potential').val()-1; i >= 1; i--) {
+      atkBuff += $.map(POTENTIALS[curCharInfo.potentialType][i], (v) => { if (v.type == 'atk') return v.buff}).reduce((a,b)=>a+b, 0)
+      hpBuff += $.map(POTENTIALS[curCharInfo.potentialType][i], (v) => { if (v.type == 'hp') return v.buff}).reduce((a,b)=>a+b, 0)
     }
-    $charDiv.find(".subPot:checked").map((_, v) => { return v.value }).get().forEach((checked) => {
-      let subPot = POTENTIALS[curCharInfo.potentialType][$charDiv.find('.potential').val()][checked]
+    $resultDiv.find(".subPot:checked").map((_, v) => { return v.value }).get().forEach((checked) => {
+      let subPot = POTENTIALS[curCharInfo.potentialType][$resultDiv.find('.potential').val()][checked]
       if (subPot.type == 'atk') atkBuff += subPot.buff
       else if (subPot.type == 'hp') hpBuff += subPot.buff
     })
 
-    $charDiv.find(".resultAtk").text(Math.floor((Math.ceil( (curCharInfo.status.initATK / (5+curCharInfo.rarity)) * 10 ) / 10) * (5+star) * Math.pow(1.1, lv-1) * (1+(1+discipline)*discipline/2*0.05) * (1+atkBuff)))
-    $charDiv.find(".resultHp").text(Math.floor((Math.ceil( (curCharInfo.status.initHP / (5+curCharInfo.rarity)) * 10 ) / 10) * (5+star) * Math.pow(1.1, lv-1) * (1+(1+discipline)*discipline/2*0.05) * (1+hpBuff)))
+    $resultDiv.find(".resultAtk").text(Math.floor((Math.ceil( (curCharInfo.status.initATK / (5+curCharInfo.rarity)) * 10 ) / 10) * (5+star) * Math.pow(1.1, lv-1) * (1+(1+discipline)*discipline/2*0.05) * (1+atkBuff)))
+    $resultDiv.find(".resultHp").text(Math.floor((Math.ceil( (curCharInfo.status.initHP / (5+curCharInfo.rarity)) * 10 ) / 10) * (5+star) * Math.pow(1.1, lv-1) * (1+(1+discipline)*discipline/2*0.05) * (1+hpBuff)))
   } catch(e) {
+    console.error(e);
     errorAlert();
+  }
+}
+
+function changeTargetPot(subPot = null) {
+  if (parseInt($('#curPotSelect').val()) >= parseInt($('#targetPotSelect').val())) {
+    $('#targetPotSelect').val($('#curPotSelect').val());
+    $('#targetSubPot .subpot').each((i, v) => {
+      $(v).attr('class', $('#curSubPot .subpot').eq(i).attr('class'));
+      $(v).prop('checked', v.checked || $('#curSubPot .subpot').eq(i).prop('checked'));
+    });
   }
 }
 

@@ -1,3 +1,6 @@
+/*****************************************************\
+              Potential Material Calculator
+\*****************************************************/
 @media (max-width: 768px) {
   .col-4 {
     width: 29% !important;
@@ -29,6 +32,10 @@ input[type='number'] {
   width: 10em;
   margin: auto;
 }
+
+/*****************************************************\
+              Character Status Calculator
+\*****************************************************/
 .form-check-inline {
   margin-right: auto !important;
 }
@@ -49,6 +56,20 @@ input[type='checkbox'].atkPot:checked,
 .w-max {
   width:100%;
 }
+
+@media only screen and (hover: hover) and (pointer: fine){
+  .potential {
+    width: 200px !important;
+  }
+  .targetPot {
+    flex: 0 0 0%;
+    /* width: 50% !important; */
+  }
+}
+
+/*****************************************************\
+                      Recruitment
+\*****************************************************/
 .fieldset {
   position: relative;
   border: 1px solid #ddd;
