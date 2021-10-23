@@ -11,7 +11,7 @@
   }
 }
 body {
-  background-color: #383838;
+  /* background-color: #383838; */
 }
 .slim.table>:not(caption) > * > * {
   padding-top: 0;
@@ -56,6 +56,13 @@ input[type='checkbox'].atkPot:checked,
 .w-max {
   width:100%;
 }
+#exchangeBtn,
+#restoreBtn {
+  font-size: 14px;
+  padding: 0 .375rem;
+  margin: 0 .375rem;
+  float: left;
+}
 
 @media only screen and (hover: hover) and (pointer: fine){
   .potential {
@@ -63,10 +70,42 @@ input[type='checkbox'].atkPot:checked,
   }
   .targetPot {
     flex: 0 0 0%;
-    /* width: 50% !important; */
+  }
+  .col-custom {
+    padding-top: 0.2rem;
+    padding-bottom: 0.2rem;
   }
 }
 
+@media screen and (min-width: 0px) {
+  .col-custom {
+    width: calc(50%);
+  }
+}
+
+@media screen and (min-width: 624px) {
+  .col-custom {
+    width: calc(33.3333%);
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .col-custom {
+    width: calc(25%);
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .col-custom {
+    width: calc(20%);
+  }
+}
+
+@media screen and (min-width: 1360px) {
+  .col-custom {
+    width: calc(16.6667%);
+  }
+}
 /*****************************************************\
                       Recruitment
 \*****************************************************/
@@ -122,7 +161,8 @@ label.btn-outline-warning:hover {
 #filtered {
   vertical-align: middle;
 }
-#clearTagButton, #listStyle {
+#clearTagButton,
+#listStyle {
   font-size: 14px;
   padding: 0 .375rem;
   margin: 0 .375rem;
