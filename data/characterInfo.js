@@ -161,6 +161,18 @@ const CHARACTERS = {
     "status": { "initATK": 958.4 , "initHP": 3332.8 },
     "potentialType": 0
   },
+  "169": {
+    "name": "小惡魔 布蘭妮",
+    "rarity": 3,
+    "status": { "initATK": 1001.6, "initHP": 3521.6 },
+    "potentialType": 0
+  },
+  "170": {
+    "name": "機靈古怪 賽露西亞",
+    "rarity": 3,
+    "status": { "initATK": 1016 , "initHP": 3470.4 },
+    "potentialType": 0
+  },
   "121": {
     "name": "魔管家 艾可",
     "rarity": 2,
@@ -286,6 +298,12 @@ const CHARACTERS = {
     "name": "暗黑精靈 索拉卡",
     "rarity": 1,
     "status": { "initATK": 663.6, "initHP": 2445.6 },
+    "potentialType": 3
+  },
+  "171": {
+    "name": "南瓜仙子 帕奈奈",
+    "rarity": 1,
+    "status": { "initATK": 638.4, "initHP": 2544 },
     "potentialType": 3
   },
   "139": {
