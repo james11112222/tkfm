@@ -2138,7 +2138,7 @@ const POTENTIALS = [
       "1": {
         "requirement": {
           "amount": 5,
-          "itemTier": 998,
+          "itemTier": 5,
           "itemType": [998]
         },
         "buff": 0,
