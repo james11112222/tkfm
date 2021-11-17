@@ -173,6 +173,12 @@ const CHARACTERS = {
     "status": { "initATK": 1016 , "initHP": 3470.4 },
     "potentialType": 0
   },
+  "172": {
+    "name": "音速魅影 祈",
+    "rarity": 3,
+    "status": { "initATK": 907.2, "initHP": 3523.2 },
+    "potentialType": 0
+  },
   "121": {
     "name": "魔管家 艾可",
     "rarity": 2,
