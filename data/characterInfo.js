@@ -179,6 +179,12 @@ const CHARACTERS = {
     "status": { "initATK": 907.2, "initHP": 3523.2 },
     "potentialType": 0
   },
+  "173": {
+    "name": "夢天堂店長 咲野夢",
+    "rarity": 3,
+    "status": { "initATK": 984, "initHP": 3580.8 },
+    "potentialType": 0
+  },
   "121": {
     "name": "魔管家 艾可",
     "rarity": 2,
@@ -310,6 +316,18 @@ const CHARACTERS = {
     "name": "南瓜仙子 帕奈奈",
     "rarity": 1,
     "status": { "initATK": 638.4, "initHP": 2544 },
+    "potentialType": 3
+  },
+  "174": {
+    "name": "人馬女僕 蘇菲",
+    "rarity": 1,
+    "status": { "initATK": 634.8, "initHP": 2556 },
+    "potentialType": 3
+  },
+  "175": {
+    "name": "冷豔美醫 嘉莉娜",
+    "rarity": 1,
+    "status": { "initATK": 628.8, "initHP": 2578.8 },
     "potentialType": 3
   },
   "139": {
