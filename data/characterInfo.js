@@ -185,6 +185,24 @@ const CHARACTERS = {
     "status": { "initATK": 984, "initHP": 3580.8 },
     "potentialType": 0
   },
+  "176": {
+    "name": "暗黑聖誕 艾可",
+    "rarity": 3,
+    "status": { "initATK": 942.4, "initHP": 3740.8 },
+    "potentialType": 0
+  },
+  "177": {
+    "name": "聖誕矮人王 蘭兒",
+    "rarity": 3,
+    "status": { "initATK": 944, "initHP": 3732.8 },
+    "potentialType": 0
+  },
+  "178": {
+    "name": "聖誕馴鹿 希依",
+    "rarity": 3,
+    "status": { "initATK": 691.2, "initHP": 5102.4 },
+    "potentialType": 1
+  },
   "121": {
     "name": "魔管家 艾可",
     "rarity": 2,

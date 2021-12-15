@@ -230,8 +230,8 @@ function calculate($charDiv, $targetDiv = null){
       }
     }
 
-    $resultDiv.find(".resultAtk").text(Math.floor((Math.ceil( (preciseDivision(curCharInfo.status.initATK, (5+curCharInfo.rarity))) * 10 ) / 10) * (5+star) * Math.pow(1.1, lv-1) * (1 + preciseDivision((1+discipline)*discipline, 2*0.05) ) * (1+atkBuff)))
-    $resultDiv.find(".resultHp").text(Math.floor((Math.ceil( (preciseDivision(curCharInfo.status.initHP, (5+curCharInfo.rarity))) * 10 ) / 10) * (5+star) * Math.pow(1.1, lv-1) * (1 + preciseDivision((1+discipline)*discipline, 2*0.05) ) * (1+hpBuff)))
+    $resultDiv.find(".resultAtk").text(Math.floor((Math.ceil( (preciseDivision(curCharInfo.status.initATK, (5+curCharInfo.rarity))) * 10 ) / 10) * (5+star) * Math.pow(1.1, lv-1) * (1 + (1+discipline)*discipline / 2*0.05 ) * (1+atkBuff)))
+    $resultDiv.find(".resultHp").text(Math.floor((Math.ceil( (preciseDivision(curCharInfo.status.initHP, (5+curCharInfo.rarity))) * 10 ) / 10) * (5+star) * Math.pow(1.1, lv-1) * (1 + (1+discipline)*discipline / 2*0.05 ) * (1+hpBuff)))
 
   } catch(e) {
     console.error(e);
