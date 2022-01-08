@@ -99,9 +99,10 @@ $(function(){
           else return 1
         })
         $.each(allIntersections, (i, intersection) => {
+          console.log(i, intersection);
           $result.append($('<tr>').append($('<td>', { text: i+1 }))
                 .append($('<td>', { text: intersection[0].join(','), class: 'nowrap' }))
-                .append($('<td>', { text: intersection[1].map((charId) => { return CHARACTERS[charId].name.split(' ')[1] || CHARACTERS[charId].name.split(' ')[0] }).join(', ') } ))
+                .append($('<td>', { html: intersection[1].map((charId) => { return "<span class='rarity_"+CHARACTERS[charId].rarity+"'>" + (CHARACTERS[charId].name.split(' ')[1] || CHARACTERS[charId].name.split(' ')[0]) + "</span>" }).join(', ') } ))
           );
         })
       } else {

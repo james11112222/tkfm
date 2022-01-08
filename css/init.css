@@ -198,3 +198,9 @@ label.btn-outline-warning:hover {
 .bg-dark.nav-link {
   color: #C2C6CA !important;
 }
+.rarity_2 {
+  color: #ffc400;
+}
+.rarity_3 {
+  color: #ee93f7;
+}
