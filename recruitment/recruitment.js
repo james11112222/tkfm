@@ -98,9 +98,10 @@ $(function(){
           else if (a[1].length == b[1].length && Math.max(...a[1].map((v) => CHARACTERS[v].rarity)) > Math.max(...b[1].map((v) => CHARACTERS[v].rarity)) ) return -1
           else return 1
         })
+        let skipped = 0;
         $.each(allIntersections, (i, intersection) => {
-          console.log(i, intersection);
-          $result.append($('<tr>').append($('<td>', { text: i+1 }))
+          if (!intersection[1].length) { skipped+=1;return; }
+          $result.append($('<tr>').append($('<td>', { text: i+1-skipped }))
                 .append($('<td>', { text: intersection[0].join(','), class: 'nowrap' }))
                 .append($('<td>', { html: intersection[1].map((charId) => { return "<span class='rarity_"+CHARACTERS[charId].rarity+"'>" + (CHARACTERS[charId].name.split(' ')[1] || CHARACTERS[charId].name.split(' ')[0]) + "</span>" }).join(', ') } ))
           );
