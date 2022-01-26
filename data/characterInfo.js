@@ -203,6 +203,18 @@ const CHARACTERS = {
     "status": { "initATK": 691.2, "initHP": 5102.4 },
     "potentialType": 1
   },
+  "179": {
+    "name": "新春 神無雪",
+    "rarity": 3,
+    "status": { "initATK": 1011.2, "initHP": 3484.8 },
+    "potentialType": 0
+  },
+  "180": {
+    "name": "新春 凜月",
+    "rarity": 3,
+    "status": { "initATK": 1012.8, "initHP": 3476.8 },
+    "potentialType": 0
+  },
   "121": {
     "name": "魔管家 艾可",
     "rarity": 2,
